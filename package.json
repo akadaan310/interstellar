@@ -1,0 +1,1 @@
+{"devDependencies":{"typescript":"^7.0.2","vite":"^8.3.0"},"name":"interstellar","private":true,"scripts":{"build":"tsc --noEmit && vite build","dev":"vite","preview":"vite preview"},"type":"module","version":"0.1.0"}

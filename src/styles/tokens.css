@@ -1,0 +1,161 @@
+/* INTERSTELLAR — design tokens: void, gold, teal; one easing; artifact motion spec */
+:root {
+  --void: #05070d;
+  --void-2: #080c16;
+  --void-3: #0b111d;
+  --gold: #e8b64c;
+  --gold-bright: #ffd97a;
+  --gold-deep: #b98a2e;
+  --gold-dim: rgba(232, 182, 76, 0.35);
+  --gold-faint: rgba(232, 182, 76, 0.12);
+  --teal: #7fd4c1;
+  --teal-dim: rgba(127, 212, 193, 0.4);
+  --teal-faint: rgba(127, 212, 193, 0.14);
+  --ink: #f3e9d2;
+  --ink-dim: #b9ad8d;
+  --muted: #6f6752;
+  --hairline: rgba(232, 182, 76, 0.18);
+  --font-head: "Didot", "Bodoni MT", "Playfair Display", Georgia, serif;
+  --font-mono: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --ease-field: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* motion spec, ms */
+  --ms-kindle: 180;
+  --ms-plate: 380;
+  --ms-ladder: 440;
+  --ms-recenter: 520;
+  --ms-bloom: 560;
+  --ms-rosette: 640;
+  --ms-pulse: 2400;
+  --ms-ambient: 16000;
+  --ms-presence: 5000;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--void);
+  color: var(--ink);
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+#app {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #0a1020 0%, var(--void) 55%, #03040a 100%);
+}
+canvas.field { display: block; width: 100%; height: 100%; touch-action: none; }
+
+/* detail plate — rises 380ms, falls on void tap */
+.detail-plate {
+  position: absolute;
+  left: 50%;
+  bottom: max(4vh, env(safe-area-inset-bottom));
+  transform: translate(-50%, 140%);
+  max-width: min(92vw, 560px);
+  padding: 18px 26px 20px;
+  text-align: center;
+  background: rgba(8, 12, 22, 0.72);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 380ms var(--ease-field), opacity 380ms var(--ease-field);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.detail-plate.open { transform: translate(-50%, 0); opacity: 1; }
+.detail-plate .dp-title {
+  font-family: var(--font-head);
+  font-size: clamp(20px, 5.4vw, 30px);
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+.detail-plate .dp-sub {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+.detail-plate .dp-meta {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--teal);
+}
+
+/* field chrome — the only persistent UI: screen name + hint */
+.field-chrome {
+  position: absolute;
+  top: max(2.4vh, env(safe-area-inset-top));
+  right: 20px;
+  left: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  pointer-events: none;
+  z-index: 4;
+}
+.field-chrome .fc-name {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(18px, 4.6vw, 26px);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  text-shadow: 0 0 24px rgba(232, 182, 76, 0.35);
+}
+.field-chrome .fc-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* sector dial overlay */
+.dial-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 4, 10, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+  z-index: 8;
+}
+.dial-veil.open { opacity: 1; pointer-events: auto; }
+
+/* nav strip — station links along the bottom edge */
+.nav-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  padding: 10px 8px max(10px, env(safe-area-inset-bottom));
+  z-index: 6;
+  pointer-events: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-strip::-webkit-scrollbar { display: none; }
+.nav-strip button {
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  padding: 6px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nav-strip button.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold-dim);
+}
