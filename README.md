@@ -41,4 +41,4 @@ python3 scripts/audit.py   # content audit: no non-English script, no religious 
 ## Content boundary
 
 All chart data is procedurally generated and synthetic. The project ships zero
-Quranic material and zero religious content — enforced by `scripts/audit.py`.
+religious content and zero non-English script — enforced by `scripts/audit.py`.

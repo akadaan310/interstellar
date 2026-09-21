@@ -189,3 +189,6 @@ boot.addEventListener("pointerdown", () => {
   }
   nav.go(byId.has(id) && id !== "chart" ? id : last && byId.has(last) ? last : "chart", params);
 });
+
+// Hidden diagnostics handle for automated smoke tests. No UI effect.
+(window as unknown as { __interstellar: unknown }).__interstellar = { field, nav };
